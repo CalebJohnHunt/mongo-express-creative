@@ -6,7 +6,7 @@ import mock from './mock-data.js'
 Vue.config.productionTip = false
 
 let data = {
-  selectedPalette: 0,
+  selectedPaletteID: 0,
   swatches: mock,
   palette: [],
   userGeneratedID: 1001, // custom id so that user-made swatches don't get mixed up with the mock-data ones

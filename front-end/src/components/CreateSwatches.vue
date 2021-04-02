@@ -1,23 +1,30 @@
 <template>
-    <div :class='badName ? "badName content" : "content"'>
-        <input type='text' placeholder='Swatch name here' :class='badName ? "badName" : "normalName"' id='inputName' v-model='name' />
-        <div class='color-row' v-for='color in this.colors' :key='color.id'>
-            <textarea class='color-name' maxlength='7' wrap='soft' v-model='color.color' :class='color.badName ? "badName" : "normalName"' placeholder='#1099b9' />
-            <div class='color' :style='{"background-color": color.color}'></div>
-            <button class='removeButton' @click='removeColor(color)'>X</button>
+    <div>
+        <div :class='badName ? "badName content" : "content"' v-if='selectedPalette'>
+            <input type='text' placeholder='Swatch name here' :class='badName ? "badName" : "normalName"' id='inputName' v-model='name' />
+            <div class='color-row' v-for='color in this.colors' :key='color.id'>
+                <textarea class='color-name' maxlength='7' wrap='soft' v-model='color.color' :class='color.badName ? "badName" : "normalName"' placeholder='#1099b9' />
+                <div class='color' :style='{"background-color": color.color}'></div>
+                <button class='removeButton' @click='removeColor(color)'>X</button>
+            </div>
+            <div class='button-container'>
+                <button id='addButton' @click='addColor'>Add Color</button>
+                <button @click='addSwatch'>Add to Palette</button>
+            </div>
         </div>
-        <div class='button-container'>
-            <button id='addButton' @click='addColor'>Add Color</button>
-            <button @click='addSwatch'>Add to Palette</button>
+        <div v-else>
+            <h2>No palette selected</h2>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'CreateSwatches',
     data: () => {
         return {
+            selectedPalette: null,
             badName: false,
             name: '',
             colors: [
@@ -29,8 +36,19 @@ export default {
                     ],
         }
     },
+    async created() {
+        if (this.$root.$data.selectedPaletteID == 0) {
+            return;
+        }
+        try {
+            const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
+            this.selectedPalette = response.data;
+        }  catch (error) {
+            console.log(error); 
+        }
+    },
     methods: {
-        addSwatch() {
+        async addSwatch() {
             // We only update badName here because we don't want the field to be red until they attempt to submit
             this.badName = !this.name; // badName = we don't have a name
 
@@ -49,12 +67,17 @@ export default {
             if (colorFail || this.badName)
                 return;
             
-            this.$root.$data.palette.push({
-                // The prefab swatches have .added, but that's just a remnant of how we add keep track of which ones we've added
-                id: this.$root.$data.userGeneratedID++, // increase id at the same time so we don't get duplicate ids
-                name: this.name,
-                colors: this.colors.map(el => el.color),
-            });
+            try {
+                const r = await axios.post('/api/palettes/' + this.selectedPalette._id + '/swatches/', {
+                    // The prefab swatches have .added, but that's just a remnant of how we add keep track of which ones we've added
+                    id: this.$root.$data.userGeneratedID++, // increase id at the same time so we don't get duplicate ids
+                    name: this.name,
+                    colors: this.colors.map(el => el.color),
+                });
+                console.log(r);
+            } catch (error) {
+                console.log(error);
+            }
         },
         addColor() {
             if (this.colors.length > 7)

@@ -1,33 +1,57 @@
 <template>
     <div class='palette'>
-        <div v-if='this.$root.$data.palette.length > 0'>
-            <button class='toggle-codes' @click='toggleCodes()'>Turn {{ this.showCodes ? "off" : "on" }} codes</button>
-            <div class='swatch' v-for='swatch in this.$root.$data.palette' :key='swatch.id'>
-                <div class='name'>
-                    <h1>{{ swatch.name }}</h1>
-                </div>
-                <div class='color-wrapper'>
-                    <div class='color-code-wrapper' v-for='color in swatch.colors' :key='color' :style='{"background-color": color, width: 100/swatch.colors.length + "%"}'>
-                        <!-- <div class='color' :style='{"background-color": color}'></div> -->
-                        <div class='color-code'>{{ showCodes ? color : ""}}</div>
-                        <!-- <div class='color-code'></div> -->
+        <div v-if='selectedPalette'>
+            <div class='selected-palette-info'>
+                <div class='name'>{{ selectedPalette.name }}</div>
+            </div>
+            <div class='swatches-wrapper' v-if='this.swatches.length > 0'>
+                <button class='toggle-codes' @click='toggleCodes()'>Turn {{ this.showCodes ? "off" : "on" }} codes</button>
+                <div class='swatch' v-for='swatch in this.swatches' :key='swatch._id'>
+                    <div class='name'>
+                        <h1>{{ swatch.name }}</h1>
                     </div>
+                    <div class='color-wrapper'>
+                        <div class='color-code-wrapper' v-for='color in swatch.colors' :key='color' :style='{"background-color": color, width: 100/swatch.colors.length + "%"}'>
+                            <div class='color-code'>{{ showCodes ? color : ""}}</div>
+                        </div>
+                    </div>
+                    <button class='removeButton' @click='removeSwatch(swatch)'>X</button>
                 </div>
-                <button class='removeButton' @click='removeSwatch(swatch)'>X</button>
+            </div>
+            <div v-else>
+                <h2>This palette is empty! Your swatches will show up here!</h2>
             </div>
         </div>
         <div v-else>
-            <h2>Your swatches will show up here!</h2>
+            <h2>No palette selected</h2>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     name: 'Palette',
     data: () => { return {
         showCodes: false,
+        selectedPalette: null,
+        swatches: [],
     }},
+    async created() {
+        // No palette selected
+        if (this.$root.$data.selectedPaletteID == 0) {
+            console.log("no palette selected");
+            return;
+        }
+        try {
+            const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
+            this.selectedPalette = response.data;
+            const response2 = await axios.get('/api/palettes/' + this.selectedPalette._id + '/swatches')
+            this.swatches = response2.data;
+        } catch (error) {
+            console.log(error);
+        }
+    },
     methods: {
         removeSwatch(swatch) {
             let index = this.$root.$data.palette.findIndex(el => el.id == swatch.id);
