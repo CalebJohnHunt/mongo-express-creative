@@ -51,6 +51,20 @@ app.get('/api/palettes', async (req, res) => {
   }
 });
 
+app.get('/api/palettes/:paletteID', async (req, res) => {
+  try {
+    const palette = await Palette.findOne({_id: req.params.paletteID});
+    if (!palette) {
+      res.send(404);
+      return;
+    }
+    res.send(palette);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+})
+
 app.delete('/api/palettes/:paletteID', async (req, res) => {
   try {
     let palette = await Palette.findOne({_id: req.params.paletteID});
@@ -165,5 +179,10 @@ app.delete('/api/palettes/:paletteID/swatches/:swatchID', async (req, res) => {
     res.sendStatus(500);
   }
 })
+
+/*
+Other requests
+*/
+
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));
