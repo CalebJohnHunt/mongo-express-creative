@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Create from '../views/Create.vue'
 import Palette from '../views/Palette.vue'
+import SelectPalette from '../views/select-palette.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     path: '/palette',
     name: 'Palette',
     component: Palette
+  },
+  {
+    path: '/select-palette',
+    name: 'Select-Palette',
+    component: SelectPalette,
   },
 ]
 
