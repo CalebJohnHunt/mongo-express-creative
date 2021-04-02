@@ -26,18 +26,6 @@ const paletteSchema = new mongoose.Schema({
 
 const Palette = mongoose.model('Palette', paletteSchema);
 
-const swatchSchema = new mongoose.Schema({
-  palette: {
-    type: mongoose.Schema.ObjectId,
-    ref: 'Palette',
-  },
-  name: String,
-  isAdded: Boolean,
-  colors: Array,
-})
-
-const Swatch = mongoose.model('Swatch', swatchSchema);
-
 app.post('/api/palettes', async (req, res) => {
   const palette = new Palette({
     name: req.body.name,
@@ -95,5 +83,87 @@ app.put('/api/palettes/:paletteID', async (req, res) => {
     res.sendStatus(500);
   }
 });
+
+
+const swatchSchema = new mongoose.Schema({
+  palette: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Palette',
+  },
+  name: String,
+  isAdded: Boolean,
+  colors: Array,
+})
+
+const Swatch = mongoose.model('Swatch', swatchSchema);
+
+app.post('/api/palettes/:paletteID/swatches', async (req, res) => {
+  try {
+    let palette = await Palette.findOne({_id: req.params.paletteID});
+    if (!palette) {
+      res.send(404);
+      return;
+    }
+    let swatch = new Swatch({
+      palette: palette,
+      name: req.body.name,
+      isAdded: req.body.isAdded,
+      colors: req.body.colors,
+    });
+    await swatch.save();
+    res.send(swatch);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.get('/api/palettes/:paletteID/swatches', async (req, res) => {
+  try {
+    let palette = await Palette.findOne({_id: req.params.paletteID});
+    if (!palette) {
+      res.send(404);
+      return;
+    }
+    let swatches = await Swatch.find({palette: palette});
+    res.send(swatches);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.put('/api/palettes/:paletteID/swatches/:swatchID', async (req, res) => {
+  try {
+    let swatch = await Swatch.findOne({_id: req.params.swatchID, palette: req.params.paletteID});
+    if (!swatch) {
+      res.send(404);
+      return;
+    }
+    swatch.name = req.body.name;
+    swatch.isAdded = req.body.isAdded;
+    swatch.colors = req.body.colors;
+    await swatch.save();
+    res.send(swatch);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+});
+
+app.delete('/api/palettes/:paletteID/swatches/:swatchID', async (req, res) => {
+  try {
+    let swatch = await Swatch.findOne({_id: req.params.swatchID, palette: req.params.paletteID});
+    if (!swatch) {
+      res.send(404);
+      return;
+    }
+    await swatch.delete();
+    res.sendStatus(200);
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(500);
+  }
+})
 
 app.listen(3000, () => console.log('Server listening on port 3000!'));
