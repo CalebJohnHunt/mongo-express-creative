@@ -5,7 +5,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/create">Create</router-link> |
       <router-link to="/palette">Palette</router-link> |
-      <router-link to="/select-palette">Select Palette</router-link>
+      <router-link to="/select-palette">Select Palette</router-link> |
+      <router-link to="/edit/:paletteID/:swatchID">Edit</router-link>
     </div>
     <router-view/>
     <Footer />

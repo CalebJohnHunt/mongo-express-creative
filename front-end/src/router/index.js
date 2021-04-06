@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Create from '../views/Create.vue'
 import Palette from '../views/Palette.vue'
 import SelectPalette from '../views/select-palette.vue'
+import Edit from '../views/Edit.vue'
 
 Vue.use(VueRouter)
 
@@ -28,6 +29,11 @@ const routes = [
     name: 'Select-Palette',
     component: SelectPalette,
   },
+  {
+    path: '/edit/:paletteID/:swatchID',
+    name: 'Edit',
+    component: Edit,
+  }
 ]
 
 const router = new VueRouter({

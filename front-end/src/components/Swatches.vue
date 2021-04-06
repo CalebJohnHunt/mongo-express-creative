@@ -1,34 +1,56 @@
 <template>
-    <div class='content'>
-        <div class='swatch-wrapper' v-for='swatch in this.$root.$data.swatches' :key='swatch.id'>
-            <div class='name'> {{ swatch.name }} </div>
-                <div class='swatch' v-for='c in swatch.colors' :key='c' :style='{"background-color": c}'>
-                    <div class='swatch-color'>{{ c }}</div>
+    <div>
+        <div class='content' v-if='this.selectedPalette'>
+            <div class='swatch-wrapper' v-for='swatch in this.$root.$data.swatches' :key='swatch.id'>
+                <div class='name'> {{ swatch.name }} </div>
+                    <div class='swatch' v-for='c in swatch.colors' :key='c' :style='{"background-color": c}'>
+                        <div class='swatch-color'>{{ c }}</div>
+                    </div>
+                <div class='added-button'>
+                    <button v-if='!swatch.added' @click='addSwatch(swatch)'>Add to Palette</button>
+                    <div v-else>Added!</div>
                 </div>
-            <div class='added-button'>
-                <button v-if='!swatch.added' @click='addSwatch(swatch)'>Add to Palette</button>
-                <div v-else>Added!</div>
             </div>
+        </div>
+        <div v-else>
+            Hello
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Swatches',
+  data: () => { return {
+      selectedPalette: null,
+  }},
+  async created() {
+    // No palette selected
+    if (this.$root.$data.selectedPaletteID == 0) {
+      console.log("no palette selected");
+      return;
+    }
+    try {
+      const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
+      this.selectedPalette = response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  },
   methods: {
-      styleBackgroundColor(c) {
-          return 'background-color: ' + c;
-      },
-      addSwatch(swatch) {
-          swatch.added = !swatch.added;
-          if (swatch.added) {
-              this.$root.$data.palette.push(swatch);
-          } else {
-              const index = this.$root.$data.palette.findIndex((el) => el.id == swatch.id);
-              this.$root.$data.palette.splice(index, 1);
-          }
+    styleBackgroundColor(c) {
+      return 'background-color: ' + c;
+    },
+    async addSwatch(swatch) {
+      swatch.added = !swatch.added;
+      if (swatch.added) {
+        this.$root.$data.palette.push(swatch);
+      } else {
+        const index = this.$root.$data.palette.findIndex((el) => el.id == swatch.id);
+        this.$root.$data.palette.splice(index, 1);
       }
+    }
   }
 }
 </script>

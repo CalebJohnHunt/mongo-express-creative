@@ -68,13 +68,22 @@ export default {
                 return;
             
             try {
-                const r = await axios.post('/api/palettes/' + this.selectedPalette._id + '/swatches/', {
+                await axios.post('/api/palettes/' + this.selectedPalette._id + '/swatches/', {
                     // The prefab swatches have .added, but that's just a remnant of how we add keep track of which ones we've added
                     id: this.$root.$data.userGeneratedID++, // increase id at the same time so we don't get duplicate ids
                     name: this.name,
                     colors: this.colors.map(el => el.color),
                 });
-                console.log(r);
+                // reset after creation
+                this.badName = false;
+                this.name = '';
+                this.colors = [
+                    {
+                        id: 1,
+                        badName: false,
+                        color: '#aa00ff',
+                    },
+                ];
             } catch (error) {
                 console.log(error);
             }
