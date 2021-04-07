@@ -7,9 +7,9 @@
       </div>
       <div class='other-nav' v-if='this.$root.$data.selectedPaletteID != 0'>
         <!-- <router-link to="/">Home</router-link> | -->
-        <router-link to="/create">Create</router-link> |
-        <router-link to="/palette">Palette</router-link> |
-        <router-link to="/edit/:paletteID/:swatchID">Edit</router-link>
+        <router-link to="/create">Create Swatches</router-link> |
+        <router-link to="/edit/:paletteID/:swatchID">Edit Swatches</router-link> |
+        <router-link to="/palette">View Palette</router-link>
       </div>
     </div>
     <router-view/>
