@@ -3,7 +3,7 @@
     <img src='/vue-creative-logo.svg' />
     <div id="nav">
       <div class='select-palette'>
-        <router-link to="/select-palette">Select Palette</router-link>
+        <router-link to="/">Select Palette</router-link>
       </div>
       <div class='other-nav' v-if='this.$root.$data.selectedPaletteID != 0'>
         <!-- <router-link to="/">Home</router-link> | -->
