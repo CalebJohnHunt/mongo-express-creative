@@ -4,7 +4,7 @@
           <div v-if='this.selectedPalette'>
             <div class='selected-palette-info'>
               <div class='current-palette'>Currently viewing:</div>
-              <div class='name'>{{ selectedPalette.name }}</div>
+              <div class='selected-name'>{{ selectedPalette.name }}</div>
             </div>
             <div class='swatches-wrapper' v-if='this.swatches.length > 0'>
               <button class='toggle-codes' @click='toggleCodes()'>Turn {{ this.showCodes ? "off" : "on" }} codes</button>
@@ -89,6 +89,10 @@ export default {
     grid-area: "name";
     word-wrap: break-word;
     /* width: 400px; */
+}
+
+.selected-name {
+  font-weight: bold;
 }
 
 h1 {

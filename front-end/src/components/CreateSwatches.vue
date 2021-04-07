@@ -117,6 +117,11 @@ export default {
 </script>
 
 <style scoped>
+
+.name {
+  font-weight: bold;
+}
+
 .content {
   display: flex;
   flex-direction: column;

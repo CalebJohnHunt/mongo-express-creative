@@ -14,7 +14,7 @@
         <button :class='{favorited: palette.isFavorite}' @click='toggleFavorite(palette)'>&#10084;</button>
         <button class='select-button' @click='selectP(palette._id)'>Select</button> 
       </div>
-      <input v-model='palette.name' type='text'>
+      <input class='palette-name' v-model='palette.name' type='text'>
       <div class='creation-date'>{{ palette.creationDate.slice(0, 10) }}</div>
       <div class='rename-x'>
         <button @click='renamePalette(palette)'>Rename</button>
@@ -212,6 +212,10 @@ input {
   text-align: center;
   margin: auto;
   font-size: 12px;
+}
+
+.palette-name {
+  font-size: 20px;
 }
 
 </style>

@@ -50,6 +50,13 @@ img {
   color: #1099B9;
 }
 
+@media (max-width:500px) {
+  .other-nav {
+    display: flex;
+    flex-direction: column;
+  }
+} 
+
 #nav a {
   font-weight: bold;
   /* color: #2c3e50; */

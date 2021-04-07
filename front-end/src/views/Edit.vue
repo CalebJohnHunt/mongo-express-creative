@@ -81,6 +81,10 @@ export default {
 
 <style scoped>
 
+.name {
+  font-weight: bold;
+}
+
 .selected-palette-info {
   display: flex;
   flex-direction: row;
