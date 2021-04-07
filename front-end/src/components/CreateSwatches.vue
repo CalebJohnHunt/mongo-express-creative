@@ -115,86 +115,86 @@ export default {
 
 <style scoped>
 .content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 70%;
-    max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  max-width: 800px;
 
-    margin: auto;
+  margin: auto;
 
-    border: 1px solid black;
+  border: 1px solid black;
 
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 #inputName {
-    border: none;
-    margin-bottom: 2px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 20px;
-    width: 95%;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+  border: none;
+  margin-bottom: 2px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  width: 95%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 #inputName:focus {
-    outline: none;
+  outline: none;
 }
 
 .color-row {
-    width: 100%;
-    min-height: 50px;
+  width: 100%;
+  min-height: 50px;
 
-    display: grid;
-    grid-template-columns: 30% 60% 10%;
+  display: grid;
+  grid-template-columns: 30% 60% 10%;
 }
 
 .color-name {
-    /* border: none; */
-    resize: none;
-    word-wrap: break-word;
-    word-break: break-all;
-    font-size: 18px;
-    color: black;
-    letter-spacing: 1px;
+  /* border: none; */
+  resize: none;
+  word-wrap: break-word;
+  word-break: break-all;
+  font-size: 18px;
+  color: black;
+  letter-spacing: 1px;
 }
 
 .color {
-    /* height: 110; */
-    width: 100%;
+  /* height: 110; */
+  width: 100%;
 }
 
 .removeButton {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 .button-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: 0;
-    background-color: black;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 0;
+  background-color: black;
 }
 
 .button-container button {
-    width: 50%;
-    font-size: 18px;
-    /* margin: 0; */
-    /* border: 0; */
-    /* padding: 0; */
+  width: 50%;
+  font-size: 18px;
+  /* margin: 0; */
+  /* border: 0; */
+  /* padding: 0; */
 }
 
 .badName {
-    background-color: lightcoral;
+  background-color: lightcoral;
 }
 
 button {
-    color: white;
-    border: 1px solid black;
+  color: white;
+  border: 1px solid black;
 }
 
 .selected-palette-info {

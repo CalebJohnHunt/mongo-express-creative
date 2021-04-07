@@ -4,17 +4,19 @@
     <div class='current-palette'>Editing:</div>
     <div class='name'>{{ selectedPalette.name }}</div>
   </div>
-    <div class='swatches-wrapper' v-if='paletteID != 0'>
+    <div class='wrapper' v-if='paletteID != 0'>
       <div v-if='swatch'>
         <EditComp :paletteID="this.paletteID" :swatch="this.swatch" />
         <button @click='goBack()'>Return</button>
       </div>
       <!-- Select a swatch from palette -->
-      <div v-else>
-        <div v-for='swatch in this.swatches' :key='swatch._id'>
-          {{ swatch.name }}
-          <button @click='editSwatch(swatch)'>Edit</button>
-          <button @click='removeSwatch(swatch)'>x</button>
+      <div v-else class='swatches'>
+        <div class='swatch' v-for='swatch in this.swatches' :key='swatch._id'>
+          <div class='swatch-name'>{{ swatch.name }}</div>
+          <div class='buttons'>
+            <button @click='editSwatch(swatch)'>Edit</button>
+            <button @click='removeSwatch(swatch)'>Delete</button>
+          </div>
         </div>
       </div>
     </div>
@@ -94,6 +96,42 @@ export default {
 
   border-radius: 10px;
   font-size: 18px;
+}
+
+.swatches {
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  font-size: 20px;
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 120px;
+
+  border: 1px black solid;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  margin: 10px;
+}
+
+.swatch-name {
+  padding: 5px 10px;
+}
+
+.buttons {
+  width: 100%;
+}
+
+.buttons button {
+  width: 50%;
 }
 
 </style>
