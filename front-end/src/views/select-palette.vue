@@ -145,7 +145,7 @@ export default {
 .form input {
   border: none;
   margin-bottom: 2px;
-  padding: 10px 0;
+  padding: 8px 0;
   text-align: center;
   font-weight: bold;
   font-size: 20px;
@@ -159,7 +159,8 @@ export default {
 }
 
 .form button {
-  height: 25px;
+  height: 30px;
+  font-size: 18px;
 }
 
 input {
