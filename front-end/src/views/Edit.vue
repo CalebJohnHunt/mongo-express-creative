@@ -7,7 +7,7 @@
     <div class='wrapper' v-if='this.$root.$data.selectedPaletteID != 0'>
       <div v-if='swatch'>
         <EditComp :paletteID="this.paletteID" :swatch="this.swatch" />
-        <button @click='goBack()'>Return</button>
+        <button class='return' @click='goBack()'>Return</button>
       </div>
       <!-- Select a swatch from palette -->
       <div v-else class='swatches'>
@@ -22,7 +22,7 @@
     </div>
     <div v-else>
       <h2>It looks like you haven't selected a palette yet!</h2>
-      <h2><router-link to='/select-palette'>Select a palette here</router-link></h2>
+      <h2><router-link class="router-link" to='/'>Select a palette here</router-link></h2>
     </div>
   </div>
 </template>
@@ -83,6 +83,14 @@ export default {
 
 .name {
   font-weight: bold;
+}
+
+.return {
+  margin-top: 5px;
+  width: 70%;
+  padding: 5px;
+  border: solid black;
+  font-size: 18px;
 }
 
 .selected-palette-info {
