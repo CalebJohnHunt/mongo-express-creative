@@ -42,6 +42,9 @@ export default {
     EditComp
   },
   async created() {
+    if (this.$root.$data.selectedPaletteID == 0) {
+      return;
+    }
     const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
     this.selectedPalette = response.data;
     await this.getSwatches();
