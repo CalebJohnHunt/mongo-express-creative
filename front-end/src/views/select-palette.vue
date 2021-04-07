@@ -15,7 +15,7 @@
         <button class='select-button' @click='selectP(palette._id)'>Select</button> 
       </div>
       <input class='palette-name' v-model='palette.name' type='text'>
-      <div class='creation-date'>{{ palette.creationDate.slice(0, 10) }}</div>
+      <div class='creation-date'>Created on {{ palette.creationDate.slice(0, 10) }}</div>
       <div class='rename-x'>
         <button @click='renamePalette(palette)'>Rename</button>
         <button @click='deletePalette(palette._id)'>X</button>
@@ -77,10 +77,12 @@ export default {
         return;
       }
       try {
-          await axios.post('/api/palettes', {
+        let d = new Date();
+        d = d.toLocaleDateString();
+        await axios.post('/api/palettes', {
           name: this.name,
           isFavorite: this.isFavorite,
-          creationDate: new Date(),
+          creationDate: d,
         });
         this.name = '';
         this.isFavorite = false;
