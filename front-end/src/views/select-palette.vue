@@ -145,6 +145,7 @@ export default {
 .form input {
   border: none;
   margin-bottom: 2px;
+  padding: 10px 0;
   text-align: center;
   font-weight: bold;
   font-size: 20px;
@@ -165,13 +166,20 @@ input {
   text-align: center;
 }
 
+.palette input {
+  margin: auto;
+  width: 90%;
+}
+
 .heart-select {
   display: grid;
   grid-template-columns: 19% 79%;
   grid-gap: 2%;
+  margin-bottom: 15px;
 }
 
 .rename-x {
+  margin-top: 8px;
   display: grid;
   grid-template-columns: 79% 19%;
   grid-gap: 2%;
