@@ -1,8 +1,8 @@
 <template>
   <div>
     <div v-if='paletteID != 0'>
-      <div v-if='swatchID != 0'>
-        <EditComp :paletteID="this.paletteID" :swatchID="this.swatchID" />
+      <div v-if='swatch'>
+        <EditComp :paletteID="this.paletteID" :swatch="this.swatch" />
       </div>
       <!-- Select a swatch from palette -->
       <div v-else>
@@ -25,7 +25,7 @@ export default {
   name: 'Edit',
   data: () => { return {
     paletteID: '0',
-    swatchID: '0',
+    swatch: null,
     swatches: [],
   }},
   components: {
@@ -46,7 +46,7 @@ export default {
     },
   methods: {
     editSwatch(swatch) {
-      this.swatchID = swatch._id;
+      this.swatch = swatch;
     }
   },
 }
