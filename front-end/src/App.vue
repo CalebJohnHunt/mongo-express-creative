@@ -2,11 +2,15 @@
   <div id="app">
     <img src='/vue-creative-logo.svg' />
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/create">Create</router-link> |
-      <router-link to="/palette">Palette</router-link> |
-      <router-link to="/select-palette">Select Palette</router-link> |
-      <router-link to="/edit/:paletteID/:swatchID">Edit</router-link>
+      <div class='select-palette'>
+        <router-link to="/select-palette">Select Palette</router-link>
+      </div>
+      <div class='other-nav' v-if='this.$root.$data.selectedPaletteID != 0'>
+        <router-link to="/">Home</router-link> |
+        <router-link to="/create">Create</router-link> |
+        <router-link to="/palette">Palette</router-link> |
+        <router-link to="/edit/:paletteID/:swatchID">Edit</router-link>
+      </div>
     </div>
     <router-view/>
     <Footer />
@@ -53,6 +57,10 @@ img {
   border-radius: 10px;
   background-color: #1099B9;
   color: white;
+}
+
+.select-palette {
+  margin-bottom: 20px;
 }
 
 button {
