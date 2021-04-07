@@ -2,6 +2,7 @@
     <div class='palette'>
         <div v-if='selectedPalette'>
             <div class='selected-palette-info'>
+                <div class='current-palette'>Currently viewing:</div>
                 <div class='name'>{{ selectedPalette.name }}</div>
             </div>
             <div class='swatches-wrapper' v-if='this.swatches.length > 0'>
@@ -128,4 +129,23 @@ h1 {
     border: 1px solid black;
     grid-area: button;
 }
+
+.selected-palette-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  /* width: 70%; */
+  max-width: 400px;
+  padding: 5px 0;
+
+  margin: auto;
+  margin-bottom: 10px;
+
+  border: 1px solid black;
+
+  border-radius: 10px;
+  font-size: 18px;
+}
+
 </style>

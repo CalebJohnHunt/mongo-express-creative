@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div v-if='paletteID != 0'>
+    <div class='selected-palette-info' v-if='selectedPalette'>
+    <div class='current-palette'>Editing:</div>
+    <div class='name'>{{ selectedPalette.name }}</div>
+  </div>
+    <div class='swatches-wrapper' v-if='paletteID != 0'>
       <div v-if='swatch'>
         <EditComp :paletteID="this.paletteID" :swatch="this.swatch" />
         <button @click='goBack()'>Return</button>
@@ -27,6 +31,7 @@ export default {
   name: 'Edit',
   data: () => { return {
     paletteID: '0',
+    selectedPalette: null,
     swatch: null,
     swatches: [],
   }},
@@ -34,7 +39,9 @@ export default {
     EditComp
   },
   async created() {
-      await this.getSwatches();
+    const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
+    this.selectedPalette = response.data;
+    await this.getSwatches();
     },
   methods: {
     editSwatch(swatch) {
@@ -68,3 +75,25 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+
+.selected-palette-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  /* width: 70%; */
+  max-width: 400px;
+  padding: 5px 0;
+
+  margin: auto;
+  margin-bottom: 10px;
+
+  border: 1px solid black;
+
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+</style>

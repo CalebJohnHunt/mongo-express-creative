@@ -1,21 +1,25 @@
 <template>
-    <div>
-        <div :class='badName ? "badName content" : "content"' v-if='selectedPalette'>
-            <input type='text' placeholder='Swatch name here' :class='badName ? "badName" : "normalName"' id='inputName' v-model='name' />
-            <div class='color-row' v-for='color in this.colors' :key='color.id'>
-                <textarea class='color-name' maxlength='7' wrap='soft' v-model='color.color' :class='color.badName ? "badName" : "normalName"' placeholder='#1099b9' />
-                <div class='color' :style='{"background-color": color.color}'></div>
-                <button class='removeButton' @click='removeColor(color)'>X</button>
-            </div>
-            <div class='button-container'>
-                <button id='addButton' @click='addColor'>Add Color</button>
-                <button @click='addSwatch'>Add to Palette</button>
-            </div>
-        </div>
-        <div v-else>
-            <h2>No palette selected</h2>
-        </div>
+<div>
+  <div class='selected-palette-info' v-if='selectedPalette'>
+    <div class='current-palette'>Adding to:</div>
+    <div class='name'>{{ selectedPalette.name }}</div>
+  </div>
+  <div :class='badName ? "badName content" : "content"' v-if='selectedPalette'>
+    <input type='text' placeholder='Swatch name here' :class='badName ? "badName" : "normalName"' id='inputName' v-model='name' />
+    <div class='color-row' v-for='color in this.colors' :key='color.id'>
+      <textarea class='color-name' maxlength='7' wrap='soft' v-model='color.color' :class='color.badName ? "badName" : "normalName"' placeholder='#1099b9' />
+      <div class='color' :style='{"background-color": color.color}'></div>
+      <button class='removeButton' @click='removeColor(color)'>X</button>
     </div>
+    <div class='button-container'>
+      <button id='addButton' @click='addColor'>Add Color</button>
+      <button @click='addSwatch'>Add to Palette</button>
+    </div>
+  </div>
+  <div v-else>
+    <h2>No palette selected</h2>
+  </div>
+</div>
 </template>
 
 <script>
@@ -191,6 +195,24 @@ export default {
 button {
     color: white;
     border: 1px solid black;
+}
+
+.selected-palette-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  /* width: 70%; */
+  max-width: 400px;
+  padding: 5px 0;
+
+  margin: auto;
+  margin-bottom: 10px;
+
+  border: 1px solid black;
+
+  border-radius: 10px;
+  font-size: 18px;
 }
 
 </style>
