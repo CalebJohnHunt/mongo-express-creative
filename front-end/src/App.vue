@@ -6,7 +6,7 @@
         <router-link to="/select-palette">Select Palette</router-link>
       </div>
       <div class='other-nav' v-if='this.$root.$data.selectedPaletteID != 0'>
-        <router-link to="/">Home</router-link> |
+        <!-- <router-link to="/">Home</router-link> | -->
         <router-link to="/create">Create</router-link> |
         <router-link to="/palette">Palette</router-link> |
         <router-link to="/edit/:paletteID/:swatchID">Edit</router-link>
@@ -44,6 +44,10 @@ img {
 #nav {
   padding: 30px;
   padding-top: 10px;
+}
+
+.router-link {
+  color: #1099B9;
 }
 
 #nav a {

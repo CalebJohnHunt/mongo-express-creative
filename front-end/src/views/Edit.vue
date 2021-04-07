@@ -4,7 +4,7 @@
     <div class='current-palette'>Editing:</div>
     <div class='name'>{{ selectedPalette.name }}</div>
   </div>
-    <div class='wrapper' v-if='paletteID != 0'>
+    <div class='wrapper' v-if='this.$root.$data.selectedPaletteID != 0'>
       <div v-if='swatch'>
         <EditComp :paletteID="this.paletteID" :swatch="this.swatch" />
         <button @click='goBack()'>Return</button>
@@ -21,7 +21,8 @@
       </div>
     </div>
     <div v-else>
-      No palette
+      <h2>It looks like you haven't selected a palette yet!</h2>
+      <h2><router-link to='/select-palette'>Select a palette here</router-link></h2>
     </div>
   </div>
 </template>

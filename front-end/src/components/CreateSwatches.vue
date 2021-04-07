@@ -4,20 +4,23 @@
     <div class='current-palette'>Adding to:</div>
     <div class='name'>{{ selectedPalette.name }}</div>
   </div>
-  <div :class='badName ? "badName content" : "content"' v-if='selectedPalette'>
-    <input type='text' placeholder='Swatch name here' :class='badName ? "badName" : "normalName"' id='inputName' v-model='name' />
-    <div class='color-row' v-for='color in this.colors' :key='color.id'>
-      <textarea class='color-name' maxlength='7' wrap='soft' v-model='color.color' :class='color.badName ? "badName" : "normalName"' placeholder='#1099b9' />
-      <div class='color' :style='{"background-color": color.color}'></div>
-      <button class='removeButton' @click='removeColor(color)'>X</button>
-    </div>
-    <div class='button-container'>
-      <button id='addButton' @click='addColor'>Add Color</button>
-      <button @click='addSwatch'>Add to Palette</button>
+  <div v-if='this.$root.$data.selectedPaletteID != 0'>
+    <div :class='badName ? "badName content" : "content"' v-if='selectedPalette'>
+      <input type='text' placeholder='Swatch name here' :class='badName ? "badName" : "normalName"' id='inputName' v-model='name' />
+      <div class='color-row' v-for='color in this.colors' :key='color.id'>
+        <textarea class='color-name' maxlength='7' wrap='soft' v-model='color.color' :class='color.badName ? "badName" : "normalName"' placeholder='#1099b9' />
+        <div class='color' :style='{"background-color": color.color}'></div>
+        <button class='removeButton' @click='removeColor(color)'>X</button>
+      </div>
+      <div class='button-container'>
+        <button id='addButton' @click='addColor'>Add Color</button>
+        <button @click='addSwatch'>Add to Palette</button>
+      </div>
     </div>
   </div>
   <div v-else>
-    <h2>No palette selected</h2>
+    <h2>It looks like you haven't selected a palette yet!</h2>
+    <h2><router-link class='router-link' to='/select-palette'>Select a palette here</router-link></h2>
   </div>
 </div>
 </template>

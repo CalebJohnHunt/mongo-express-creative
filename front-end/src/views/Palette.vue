@@ -1,30 +1,34 @@
 <template>
     <div class='palette'>
-        <div v-if='selectedPalette'>
+        <div v-if='this.$root.$data.selectedPaletteID != 0'>
+          <div v-if='this.selectedPalette'>
             <div class='selected-palette-info'>
-                <div class='current-palette'>Currently viewing:</div>
-                <div class='name'>{{ selectedPalette.name }}</div>
+              <div class='current-palette'>Currently viewing:</div>
+              <div class='name'>{{ selectedPalette.name }}</div>
             </div>
             <div class='swatches-wrapper' v-if='this.swatches.length > 0'>
-                <button class='toggle-codes' @click='toggleCodes()'>Turn {{ this.showCodes ? "off" : "on" }} codes</button>
-                <div class='swatch' v-for='swatch in this.swatches' :key='swatch._id'>
-                    <div class='name'>
-                        <h1>{{ swatch.name }}</h1>
-                    </div>
-                    <div class='color-wrapper'>
-                        <div class='color-code-wrapper' v-for='color in swatch.colors' :key='color' :style='{"background-color": color, width: 100/swatch.colors.length + "%"}'>
-                            <div class='color-code'>{{ showCodes ? color : ""}}</div>
-                        </div>
-                    </div>
-                    <!-- <button class='removeButton' @click='removeSwatch(swatch)'>X</button> -->
+              <button class='toggle-codes' @click='toggleCodes()'>Turn {{ this.showCodes ? "off" : "on" }} codes</button>
+              <div class='swatch' v-for='swatch in this.swatches' :key='swatch._id'>
+                <div class='name'>
+                  <h1>{{ swatch.name }}</h1>
                 </div>
+                <div class='color-wrapper'>
+                  <div class='color-code-wrapper' v-for='color in swatch.colors' :key='color' :style='{"background-color": color, width: 100/swatch.colors.length + "%"}'>
+                    <div class='color-code'>{{ showCodes ? color : ""}}</div>
+                  </div>
+                </div>
+                <!-- <button class='removeButton' @click='removeSwatch(swatch)'>X</button> -->
+              </div>
             </div>
             <div v-else>
-                <h2>This palette is empty! Your swatches will show up here!</h2>
-            </div>
+              <h2>This palette is empty! Your swatches will show up here!</h2>
+              <h2><router-link class='router-link' to='/create'>Add swatches here</router-link></h2>
+            </div> 
+          </div>
         </div>
         <div v-else>
-            <h2>No palette selected</h2>
+          <h2>It looks like you haven't selected a palette yet!</h2>
+          <h2><router-link class='router-link' to='/select-palette'>Select a palette here</router-link></h2>
         </div>
     </div>
 </template>
