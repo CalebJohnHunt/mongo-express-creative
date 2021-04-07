@@ -91,6 +91,7 @@ export default {
 .return {
   margin-top: 5px;
   width: 70%;
+  max-width: 800px;
   padding: 5px;
   border: solid black;
   font-size: 18px;
