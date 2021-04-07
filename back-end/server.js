@@ -30,7 +30,7 @@ app.post('/api/palettes', async (req, res) => {
   const palette = new Palette({
     name: req.body.name,
     creationDate: req.body.creationDate,
-    favorite: req.body.isFavorite,
+    isFavorite: req.body.isFavorite,
   });
   try {
     palette.save();

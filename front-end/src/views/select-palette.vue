@@ -1,20 +1,23 @@
 <template>
-  <div class='content'>
-    <div class='form'>
-      <input type='text' v-model='name' placeholder='Palette name' />
-      <input type='checkbox' v-model='isFavorite' />
-      <!-- Instead of a checkbox, use an outline and filled in star to show favorite -->
-      <button @click='submitPalette()'>Add palette</button>
-    </div>
+<div class='content'>
+  <div class='form'>
+    <input type='text' v-model='name' placeholder='Palette name' />
+    <input type='checkbox' v-model='isFavorite' />
+    <!-- Instead of a checkbox, use an outline and filled in star to show favorite -->
+    <button @click='submitPalette()'>Add palette</button>
+  </div>
 
-
+  <div class='palettes'>
     <div class='palette' v-for='palette in palettes' :key='palette._id' :class='{selected : selectedP == palette._id}'>
       <button class='select-button' @click='selectP(palette._id)'>Select</button> 
       <input v-model='palette.name' type='text'>
       <div>{{ palette.creationDate }}</div>
       <button @click='deletePalette(palette._id)'>X</button>
+      <button @click='renamePalette(palette)'>Rename</button>
+      <input type='checkbox' v-model='palette.isFavorite' />
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -42,6 +45,18 @@ export default {
       this.$root.$data.selectedPaletteID = paletteID;
       this.selectedP = paletteID;
     },
+    async renamePalette(palette) {
+      try {
+        await axios.put('/api/palettes/' + palette._id, {
+          name: palette.name,
+          creationDate: palette.creationDate,
+          isFavorite: palette.isFavorite,
+        });
+        this.getPalettes();
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async submitPalette() {
       if (!this.name) {
         console.log("Name needed");
@@ -61,9 +76,13 @@ export default {
       }
     },
     async getPalettes() {
+      // Put favorites first, then append the rest
       try {
         const response = await axios.get('/api/palettes');
-        this.palettes = response.data;
+        let allPalettes = response.data;
+        let favorites = allPalettes.filter(el => el.isFavorite);
+        let nonfavorites = allPalettes.filter(el => !el.isFavorite);
+        this.palettes = favorites.concat(nonfavorites);
         this.selected = this.$root.$data.selectedPaletteID;
       } catch (error) {
         console.log(error);
@@ -93,5 +112,11 @@ export default {
 .palette {
   display: flex;
   flex-direction: row;
+}
+
+.palettes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

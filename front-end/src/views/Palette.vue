@@ -15,7 +15,7 @@
                             <div class='color-code'>{{ showCodes ? color : ""}}</div>
                         </div>
                     </div>
-                    <button class='removeButton' @click='removeSwatch(swatch)'>X</button>
+                    <!-- <button class='removeButton' @click='removeSwatch(swatch)'>X</button> -->
                 </div>
             </div>
             <div v-else>
@@ -37,31 +37,37 @@ export default {
         selectedPalette: null,
         swatches: [],
     }},
-    async created() {
-        // No palette selected
-        if (this.$root.$data.selectedPaletteID == 0) {
-            console.log("no palette selected");
-            return;
-        }
-        try {
-            const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
-            this.selectedPalette = response.data;
-            const response2 = await axios.get('/api/palettes/' + this.selectedPalette._id + '/swatches')
-            this.swatches = response2.data;
-        } catch (error) {
-            console.log(error);
-        }
+  async created() {
+    // No palette selected
+    this.getSwatches();
+  },
+  methods: {
+    async removeSwatch(swatch) {
+      try {
+        axios.delete('/api/palettes/' + this.selectedPalette._id + '/swatches/' + swatch._id);
+        this.getSwatches();
+      } catch (error) {
+        console.log(error);
+      }
     },
-    methods: {
-        removeSwatch(swatch) {
-            let index = this.$root.$data.palette.findIndex(el => el.id == swatch.id);
-            if (swatch.added) swatch.added = false;
-            this.$root.$data.palette.splice(index, 1);
-        },
-        toggleCodes() {
-            this.showCodes = !this.showCodes;
-        }
+    async getSwatches() {
+      if (this.$root.$data.selectedPaletteID == 0) {
+        console.log("no palette selected");
+        return;
+      }
+      try {
+        const response = await axios.get('/api/palettes/' + this.$root.$data.selectedPaletteID);
+        this.selectedPalette = response.data;
+        const response2 = await axios.get('/api/palettes/' + this.selectedPalette._id + '/swatches')
+        this.swatches = response2.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    toggleCodes() {
+      this.showCodes = !this.showCodes;
     }
+  }
 }
 </script>
 
@@ -70,8 +76,8 @@ export default {
     display: grid;
     margin: 10px 0;
     /* border: 1px solid black; */
-    grid-template-columns: 20% 70% 10%;
-    grid-template-areas: "name colors button";
+    grid-template-columns: 20% 80%;
+    grid-template-areas: "name colors";
 }
 
 .name {
