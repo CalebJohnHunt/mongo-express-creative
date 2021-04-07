@@ -2,19 +2,24 @@
 <div class='content'>
   <div class='form'>
     <input type='text' v-model='name' placeholder='Palette name' />
-    <button :class='{favorited: this.isFavorite}' @click='isFavorite = !isFavorite'>&#10084;</button>
-    <!-- Instead of a checkbox, use an outline and filled in star to show favorite -->
-    <button @click='submitPalette()'>Add palette</button>
+    <div class='buttons'>
+      <button :class='{favorited: this.isFavorite}' @click='isFavorite = !isFavorite'>&#10084;</button>
+      <button @click='submitPalette()'>Add palette</button>
+    </div>
   </div>
 
   <div class='palettes'>
     <div class='palette' v-for='palette in palettes' :key='palette._id' :class='{selected : selectedP == palette._id}'>
-      <button :class='{favorited: palette.isFavorite}' @click='toggleFavorite(palette)'>&#10084;</button>
-      <button class='select-button' @click='selectP(palette._id)'>Select</button> 
-      <div class='creation-date'>{{ palette.creationDate.slice(0, 10) }}</div>
+      <div class='heart-select'>
+        <button :class='{favorited: palette.isFavorite}' @click='toggleFavorite(palette)'>&#10084;</button>
+        <button class='select-button' @click='selectP(palette._id)'>Select</button> 
+      </div>
       <input v-model='palette.name' type='text'>
-      <button @click='renamePalette(palette)'>Rename</button>
-      <button @click='deletePalette(palette._id)'>X</button>
+      <div class='creation-date'>{{ palette.creationDate.slice(0, 10) }}</div>
+      <div class='rename-x'>
+        <button @click='renamePalette(palette)'>Rename</button>
+        <button @click='deletePalette(palette._id)'>X</button>
+      </div>
     </div>
   </div>
 </div>
@@ -116,19 +121,87 @@ export default {
 </script>
 
 <style scoped>
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+
+  max-width: 800px;
+}
+
+.form input {
+  border: none;
+  margin-bottom: 2px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+  width: 95%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.form input:focus {
+  outline: none;
+}
+
+.form button {
+  height: 25px;
+}
+
+input {
+  text-align: center;
+}
+
+.heart-select {
+  display: grid;
+  grid-template-columns: 19% 79%;
+  grid-gap: 2%;
+}
+
+.rename-x {
+  display: grid;
+  grid-template-columns: 79% 19%;
+  grid-gap: 2%;
+}
+
+.buttons {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
 .selected {
-  border: 1px solid red;
+  padding: 5px;
+  border-radius: 3px;
+  border: 4px solid #1099B9 !important;
 }
 
 .palette {
+  max-width: 90%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+
+  margin: 10px;
+
+  border: 1px solid black;
 }
 
 .palettes {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .favorited {
@@ -138,6 +211,7 @@ export default {
 .creation-date {
   text-align: center;
   margin: auto;
+  font-size: 12px;
 }
 
 </style>
